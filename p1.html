@@ -1,50 +1,115 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>@BleedBlue Army</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
-    <style>
-        body {
-            margin: 0;
-            background: black;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-        video {
-            width: 100%;
-            max-width: 100%;
-            height: auto;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BLEEDBLUEARMY🇮🇳</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #0f172a;
+      color: white;
+      text-align: center;
+    }
+    header {
+      background: #1e3a8a;
+      padding: 15px;
+      font-size: 20px;
+      font-weight: bold;
+      border-bottom: 2px solid #2563eb;
+    }
+    .container {
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 10px;
+    }
+    video {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0px 0px 12px rgba(0,0,0,0.6);
+      background: black;
+    }
+    .card {
+      background: #1e293b;
+      margin-top: 20px;
+      padding: 15px;
+      border-radius: 10px;
+    }
+    .btn {
+      display: block;
+      background: #2563eb;
+      color: white;
+      text-decoration: none;
+      padding: 12px;
+      border-radius: 8px;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+    .btn:hover {
+      background: #1d4ed8;
+    }
+    .small {
+      font-size: 14px;
+      color: #cbd5e1;
+      margin-top: 8px;
+    }
+  </style>
 </head>
 <body>
-    <video id="video" controls autoplay></video>
+  <header>BLEEDBLUEARMY🇮🇳</header>
 
-    <script>
-        const id = new URLSearchParams(window.location.search).get("id");
+  <div class="container">
+    <!-- M3U8 Video Player -->
+    <video id="video" controls></video>
 
-        const links = {
-            "ten-5": "https://dai.google.com/ssai/event/DD7fA-HgSUaLyZp9AjRYxQ/master.m3u8",
-            "ten-3": "https://dai.google.com/ssai/event/nmQFuHURTYGQBNdUG-2Qdw/master.m3u8",
-            // Add more IDs and URLs here
-        };
+    <!-- Telegram Join Section -->
+    <div class="card">
+      <h3>📣 Follow us for Updates!</h3>
+      <a href="https://t.me/+_WN9XxoZT8QxZmI1" class="btn" target="_blank">Join Telegram Channel</a>
+      <p class="small">Click above to join on Telegram</p>
+    </div>
 
-        const video = document.getElementById('video');
-        const videoSrc = links[id];
+    <!-- Share Section -->
+    <div class="card">
+      <h3>Copy Link & Open in Chrome Browser Only</h3>
+      <a href="#" class="btn" id="copyLink">Copy Page Link</a>
+      <p class="small">If link doesn’t open, paste it manually in Chrome.</p>
+    </div>
+  </div>
 
-        if (Hls.isSupported() && videoSrc) {
-            const hls = new Hls();
-            hls.loadSource(videoSrc);
-            hls.attachMedia(video);
-        } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-            video.src = videoSrc;
-        } else {
-            alert("Unsupported video format or invalid ID.");
-        }
-    </script>
+  <!-- HLS.js Script for m3u8 -->
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+  <script>
+    var video = document.getElementById('video');
+
+    // ✅ Your M3U8 Link
+    var videoSrc = "https://dontknow@hocdn.news/Willow_Cricket_Live_TV/tracks-v1a1/mono.m3u8";
+
+    if (Hls.isSupported()) {
+      var hls = new Hls();
+      hls.loadSource(videoSrc);
+      hls.attachMedia(video);
+    } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+      video.src = videoSrc;
+    }
+
+    // Redirect to Telegram once on first play
+    video.addEventListener('play', function(e) {
+      if (!localStorage.getItem("visitedTelegram")) {
+        video.pause(); // stop video
+        localStorage.setItem("visitedTelegram", "true"); // mark as visited
+        window.location.href = "https://t.me/+_WN9XxoZT8QxZmI1"; // redirect
+      }
+    });
+
+    // Copy link button
+    document.getElementById("copyLink").addEventListener("click", function(e) {
+      e.preventDefault();
+      navigator.clipboard.writeText(window.location.href);
+      alert("Page link copied!");
+    });
+  </script>
 </body>
 </html>
